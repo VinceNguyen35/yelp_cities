@@ -1,0 +1,49 @@
+<%- include("partials/header") %>
+
+    <!-- Bootstrap Form -->
+    <div class="container">
+        <h1>Edit City</h1>
+        <form method="POST" action="/cities/<%= city._id %>?_method=PUT">
+            <div class="mb-3">
+                <label for="cityName" class="form-label">City Name</label>
+                <input type="text" class="form-control" id="cityName" name="cityName" value="<%= city.cityName %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="countrName" class="form-label">Country Name</label>
+                <input type="text" class="form-control" id="countryName" name="countryName" value="<%= city.countryName %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="continent" class="form-label">Continent</label>
+                <select class="form-control" name="continent" id="continent" required>
+                    <option value="" disabled>-- Choose Below --</option>
+                    <option <%= city.continent === "North America" ? "selected" : "" %>>North America</option>
+                    <option <%= city.continent === "South America" ? "selected" : "" %>>South America</option>
+                    <option <%= city.continent === "Europe" ? "selected" : "" %>>Europe</option>
+                    <option <%= city.continent === "Asia" ? "selected" : "" %>>Asia</option>
+                    <option <%= city.continent === "Africa" ? "selected" : "" %>>Africa</option>
+                    <option <%= city.continent === "Australia" ? "selected" : "" %>>Australia</option>
+                    <option <%= city.continent === "Oceania" ? "selected" : "" %>>Oceania</option>
+                    <option <%= city.continent === "Antarctica" ? "selected" : "" %>>Antarctica</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="population" class="form-label">Population</label>
+                <input type="number" class="form-control" id="population" name="population" value="<%= city.population %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="currencyUsed" class="form-label">Currency Used</label>
+                <input type="text" class="form-control" id="currencyUsed" name="currencyUsed" value="<%= city.currencyUsed %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" cols="10" rows="5" required><%= city.description %></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Link to Image</label>
+                <input type="text" class="form-control" id="image" name="image" value="<%= city.image %>" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+<%- include("partials/footer") %> 

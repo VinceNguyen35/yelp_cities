@@ -1,0 +1,62 @@
+<%- include("partials/header") %>
+
+    <!-- Bootstrap Form -->
+    <div class="container">
+        <h1>Add New City</h1>
+        <form method="POST" action="/cities">
+            <div class="mb-3">
+                <label for="cityName" class="form-label">City Name</label>
+                <input type="text" class="form-control" id="cityName" name="cityName" placeholder="e.g. London" autofocus required>
+            </div>
+            <div class="mb-3">
+                <label for="countrName" class="form-label">Country Name</label>
+                <input type="text" class="form-control" id="countryName" name="countryName" placeholder="e.g. United Kingdom" required>
+            </div>
+            <div class="mb-3">
+                <label for="continent" class="form-label">Continent</label>
+                <select class="form-control" name="continent" id="continent" required>
+                    <option value="" disabled selected>-- Choose Below --</option>
+                    <option>North America</option>
+                    <option>South America</option>
+                    <option>Europe</option>
+                    <option>Asia</option>
+                    <option>Africa</option>
+                    <option>Australia</option>
+                    <option>Oceania</option>
+                    <option>Antarctica</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="population" class="form-label">Population</label>
+                <input type="number" class="form-control" id="population" name="population" placeholder="e.g. 11,000,000" required>
+            </div>
+            <div class="mb-3">
+                <label for="currencyUsed" class="form-label">Currency Used</label>
+                <input type="text" class="form-control" id="currencyUsed" name="currencyUsed" placeholder="e.g. British Pound" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" cols="10" rows="5" placeholder="Tell us more about the city!" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Link to Image</label>
+                <input type="text" class="form-control" id="image" name="image" placeholder="https://www.myimage.com" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- <h1>Add New City</h1>
+    <form action="/cities" method="post">
+        <label for="cityName">City Name</label>
+        <input type="text" name="cityName" autofocus>
+        <label for="description">Description</label>
+        <input type="text" name="description">
+        <label for="image">Image Link</label>
+        <input type="text" name="image">
+        <br>
+        <br>
+        <button type="submit">Submit</button>
+    </form> -->
+
+<%- include("partials/footer") %> 
