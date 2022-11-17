@@ -14,7 +14,12 @@ const LocalStrategy = require("passport-local").Strategy;
 const expressSession = require("express-session");
 
 // Config Import
-const config = require("./config");
+try {
+    var config = require("./config");
+} catch(err) {
+    console.log("Could not import config. This probably means you're not working locally.");
+    console.log(err);
+}
 
 // Route Imports
 const citiesRoutes = require("./routes/cities");
@@ -42,8 +47,13 @@ app.use(morgan("tiny"));
 // CONFIG
 /////////////////////////////////////////////////////////////////////////
 
-// Connect to Database
-mongoose.connect(config.db.connection);
+// Mongoose Config
+try {
+    mongoose.connect(config.db.connection);
+} catch(err) {
+    console.log("Could not import config. This probably means you're not working locally.");
+    mongoose.connect(process.env.DB_CONNECTION_STRING);
+}
 
 // Express Config
 app.set("view engine", "ejs");
@@ -51,7 +61,7 @@ app.use(express.static("public"));
 
 // Express Session Config
 app.use(expressSession({
-    secret: "kjfoisjdsoifnknciodafjewoifjaposdfsaifdpjfsdpaf",
+    secret: process.env.ES_SECRET || config.expressSession.secret,
     resave: false,
     saveUninitialized: false
 }));
@@ -86,6 +96,6 @@ app.use("/cities/:id/comments", commentsRoutes);
 /////////////////////////////////////////////////////////////////////////
 
 // Check that app is running
-app.listen("3000", () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log("yelp_cities is running");
 });
