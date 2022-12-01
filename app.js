@@ -96,6 +96,6 @@ app.use("/cities/:id/comments", commentsRoutes);
 /////////////////////////////////////////////////////////////////////////
 
 // Check that app is running
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 8081, () => {
     console.log("yelp_cities is running");
 });
