@@ -62,6 +62,38 @@ router.get("/search", async (req, res) => {
     }
 });
 
+// Continents Route
+router.get("/continents/:continent", async (req, res) => {
+    // Check if the given continent is valid
+    const validContinents = [
+        "north-america",
+        "south-america",
+        "europe",
+        "asia",
+        "africa",
+        "australia",
+        "oceania",
+        "antarctica"
+    ];
+    if(validContinents.includes(req.params.continent.toLowerCase())) {
+        // Capitalize first letter to help with finding
+        var continentName = req.params.continent.charAt(0).toUpperCase() + req.params.continent.slice(1);
+        // Special case for North and South America
+        if(continentName === "North-america") {
+            continentName = "North America";
+        }
+        if(continentName === "South-america") {
+            continentName = "South America";
+        }
+        // If yes, continue
+        const cities = await City.find({continent: continentName}).exec();
+        res.render("cities", {cities});
+    } else {
+        // If no, send an error
+        res.send("Please enter a valid continent");
+    }
+});
+
 // Show Route
 router.get("/:id", async (req, res) => {
     try {
