@@ -27,7 +27,7 @@ const city_seeds = [
         population: 4298000,
         currencyUsed: 'Euro',
         description: "I'm baby swag williamsburg intelligentsia, skateboard tbh yr craft beer. Gluten-free lyft irony flannel fashion axe hammock. Tattooed lyft jianbing, beard blog coloring book gentrify. Cloud bread jean shorts vice, knausgaard mumblecore edison bulb la croix quinoa. Swag subway tile locavore post-ironic organic forage.",
-        image: 'https://res.klook.com/image/upload/Mobile/City/afmqgg5h0jl9wnr1dfmf.jpg'
+        image: 'https://www.fodors.com/wp-content/uploads/2018/10/HERO_UltimateRome_Hero_shutterstock789412159.jpg'
     },
     {
         cityName: 'Los Angeles',
