@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
         res.render("cities", {cities});
     } catch(err) {
         console.log(err);
-        res.send("You broke it... /index");
+        res.redirect("/cities");
     }
 });
 
@@ -34,11 +34,12 @@ router.post("/", isLoggedIn, async (req, res) => {
 
     try {
         const city = await City.create(newCity);
-        console.log(city);
+        req.flash("success", "City Created!");
         res.redirect("/cities/" + city._id);
     } catch(err) {
         console.log(err);
-        res.send("Broken again... POST city");
+        req.flash("error", "Create City Failed.");
+        res.redirect("/cities");
     }
 });
 
@@ -58,7 +59,7 @@ router.get("/search", async (req, res) => {
         res.render("cities", {cities});
     } catch(err) {
         console.log(err);
-        res.send("Broken Search");
+        res.redirect("/cities");
     }
 });
 
@@ -90,7 +91,8 @@ router.get("/continents/:continent", async (req, res) => {
         res.render("cities", {cities});
     } else {
         // If no, send an error
-        res.send("Please enter a valid continent");
+        req.flash("error", "Please enter a valid continent.");
+        res.redirect("/cities");
     }
 });
 
@@ -102,14 +104,20 @@ router.get("/:id", async (req, res) => {
         res.render("cities_show", {city, comments});
     } catch(err) {
         console.log(err);
-        res.send("You broke it... /show city");
+        res.redirect("/cities");
     }
 });
 
 // Edit Route
 router.get("/:id/edit", checkCityOwner, async (req, res) => {
-    const city = await City.findById(req.params.id).exec();
-    res.render("cities_edit", {city});
+    try {
+        const city = await City.findById(req.params.id).exec();
+        res.render("cities_edit", {city});
+    } catch(err) {
+        console.log(err);
+        req.flash("error", "Edit City Failed.");
+        res.redirect("/cities");
+    }
 });
 
 // Update Route
@@ -126,11 +134,12 @@ router.put("/:id", checkCityOwner, async (req, res) => {
 
     try {
         const updatedCity = await City.findByIdAndUpdate(req.params.id, city, {new: true}).exec();
-        console.log(updatedCity);
+        req.flash("success", "City updated!");
         res.redirect(`/cities/${req.params.id}`);
     } catch(err) {
         console.log(err);
-        res.send("Broken again... Update route");
+        req.flash("error", "Update City Failed.");
+        res.redirect("/cities");
     }
 });
 
@@ -138,10 +147,12 @@ router.put("/:id", checkCityOwner, async (req, res) => {
 router.delete("/:id", checkCityOwner, async (req, res) => {
     try {
         const deletedCity = await City.findByIdAndDelete(req.params.id).exec();
-        console.log("Deleted:", deletedCity);
+        req.flash("success", "City deleted!");
         res.redirect("/cities");
     } catch(err) {
-        res.send("Error deleting:", err);
+        console.log(err);
+        req.flash("error", "Delete City Failed.");
+        res.redirect("/cities");
     }
 });
 

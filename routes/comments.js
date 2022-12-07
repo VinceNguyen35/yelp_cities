@@ -20,12 +20,13 @@ router.post("/", isLoggedIn, async (req, res) => {
             },
             text: req.body.text,
             cityId: req.body.cityId
-        })
-        console.log(comment);
+        });
+        req.flash("success", "Comment added!");
         res.redirect(`/cities/${req.body.cityId}`);
     } catch(err) {
         console.log(err);
-        res.send("Broken Again... POST comments");
+        req.flash("error", "Create Comment Failed.");
+        res.redirect("/cities");
     }
 });
 
@@ -34,12 +35,11 @@ router.get("/:commentId/edit", checkCommentOwner, async (req, res) => {
     try {
         const city = await City.findById(req.params.id).exec();
         const comment = await Comment.findById(req.params.commentId).exec();
-        console.log("city:", city);
-        console.log("comment:", comment);
         res.render("comments_edit", {city, comment});
     } catch(err) {
         console.log(err);
-        res.send("Broke comment Edit GET");
+        req.flash("error", "Edit Comment Failed.");
+        res.redirect("/cities");
     }
 });
 
@@ -48,10 +48,12 @@ router.put("/:commentId", checkCommentOwner, async (req, res) => {
     try {
         const comment = await Comment.findByIdAndUpdate(req.params.commentId, {text: req.body.text}, {new: true});
         console.log(comment);
+        req.flash("success", "Comment updated!");
         res.redirect(`/cities/${req.params.id}`);
     } catch(err) {
         console.log(err);
-        res.send("Brokeen comment update PUT");
+        req.flash("error", "Edit Comment Failed.");
+        res.redirect("/cities");
     }
 });
 
@@ -60,10 +62,12 @@ router.delete("/:commentId", checkCommentOwner, async (req, res) => {
     try {
         const comment = await Comment.findByIdAndDelete(req.params.commentId);
         console.log(comment);
+        req.flash("success", "Comment deleted!");
         res.redirect(`/cities/${req.params.id}`);
     } catch(err) {
         console.log(err);
-        res.send("Broken Comment DELETE");
+        req.flash("error", "Delete Comment Failed.");
+        res.redirect("/cities");
     }
 });
 
