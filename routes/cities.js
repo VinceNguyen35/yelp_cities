@@ -64,7 +64,6 @@ router.get("/search", async (req, res) => {
 
 // Continents Route
 router.get("/continents/:continent", async (req, res) => {
-    // Check if the given continent is valid
     const validContinents = [
         "north-america",
         "south-america",
@@ -75,6 +74,7 @@ router.get("/continents/:continent", async (req, res) => {
         "oceania",
         "antarctica"
     ];
+    // Check if the given continent is valid
     if(validContinents.includes(req.params.continent.toLowerCase())) {
         // Capitalize first letter to help with finding
         var continentName = req.params.continent.charAt(0).toUpperCase() + req.params.continent.slice(1);
