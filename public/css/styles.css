@@ -23,6 +23,11 @@
     line-height: 1.4;
 }
 
+.landing-title {
+    color: #000;
+    background-color: #fff;
+}
+
 /* show_cities */
 .show_image-container img {
     width: 90%;

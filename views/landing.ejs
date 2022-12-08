@@ -1,6 +1,17 @@
-<h1>
-    Landing Page
-</h1>
-<form action="/" method="POST">
-    <button type="submit">Enter</button>
-</form>
+<%- include("partials/header") %>
+   
+    <div class="card bg-dark text-white mt-5" style="width: 100%">
+        <img class="card-img" src="/img/landing.jpg" alt="A globe with world landmarks">
+        <div class="card-img-overlay">
+            <div class="alert alert-light mt-5">
+                <h1 class="text-center landing-title">
+                    Yelp: Cities Edition
+                </h1>
+                <form action="/" method="POST">
+                    <button type="submit" class="btn btn-success w-100">Discover</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<%- include("partials/footer") %>
