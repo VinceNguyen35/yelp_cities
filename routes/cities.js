@@ -98,6 +98,13 @@ router.get("/continents/:continent", async (req, res) => {
     }
 });
 
+// Vote
+router.post("/vote", (req, res) => {
+    res.json({
+        message: "Voted!"
+    });
+});
+
 // Show Route
 router.get("/:id", async (req, res) => {
     try {
