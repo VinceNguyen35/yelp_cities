@@ -146,6 +146,7 @@ router.put("/:id", checkCityOwner, async (req, res) => {
 // Delete Route
 router.delete("/:id", checkCityOwner, async (req, res) => {
     try {
+        const deletedComments = await Comment.deleteMany({cityId: req.params.id});
         const deletedCity = await City.findByIdAndDelete(req.params.id).exec();
         req.flash("success", "City deleted!");
         res.redirect("/cities");
