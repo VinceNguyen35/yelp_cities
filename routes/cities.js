@@ -98,8 +98,9 @@ router.get("/continents/:continent", async (req, res) => {
     }
 });
 
-// Vote
+// Vote Route
 router.post("/vote", (req, res) => {
+    console.log(req.body);
     res.json({
         message: "Voted!"
     });
