@@ -99,11 +99,13 @@ router.get("/continents/:continent", async (req, res) => {
 });
 
 // Vote Route
-router.post("/vote", (req, res) => {
-    console.log(req.body);
-    res.json({
-        message: "Voted!"
-    });
+router.post("/vote", async (req, res) => {
+    console.log("Request body: ", req.body);
+
+    const city = await City.findById(req.body.cityId);
+    console.log(city);
+
+    res.json(city);
 });
 
 // Show Route
