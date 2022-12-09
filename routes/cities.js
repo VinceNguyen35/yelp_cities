@@ -112,43 +112,46 @@ router.post("/vote", async (req, res) => {
         if(req.body.voteType === "up") { // Upvoting
             city.upvotes.push(req.user.username);
             city.save();
-            response.message = "Upvote tallied!";
+            response = {message: "Upvote tallied!", code: 1};
         } else if(req.body.voteType === "down") { // Downvoting
             city.downvotes.push(req.user.username);
             city.save();
-            response.message = "Downvote tallied!";
+            response = {message: "Downvote tallied!", code: -1};
         } else { // Error 1
-            response.message = "Error 1";
+            response = {message: "Error 1", code: "err"};
         }
     } else if(alreadyUpvoted >= 0) { // Already Upvoted
         if(req.body.voteType === "up") { // Cancel Upvote
             city.upvotes.splice(alreadyUpvoted, 1);
             city.save();
-            response.message = "Upvote Removed";
+            response = {message: "Upvote Removed", code: 0};
         } else if(req.body.voteType === "down") { // Change to Downvote
             city.upvotes.splice(alreadyUpvoted, 1);
             city.downvotes.push(req.user.username);
             city.save();
-            response.message = "Changed to Downvote";
+            response = {message: "Changed to Downvote", code: -1};
         } else { // Error 2
-            response.message = "Error 2";
+            response = {message: "Error 2", code: "err"};
         }
     } else if(alreadyDownvoted >= 0) { // Already Downvoted
         if(req.body.voteType === "up") { // Change to Upvote
             city.downvotes.splice(alreadyDownvoted, 1);
             city.upvotes.push(req.user.username);
             city.save();
-            response.message = "Changed to Upvote";
+            response = {message: "Changed to Upvote", code: 1};
         } else if(req.body.voteType === "down") { // Cancel Downvote
             city.downvotes.splice(alreadyDownvoted, 1);
             city.save();
-            response.message = "Downvote Removed";
+            response = {message: "Downvote Removed", code: 0};
         } else { // Error 3
-            response.message = "Error 3";
+            response = {message: "Error 3", code: "err"};
         }
     } else { // Error 4
-        response.message = "Error 4";
+        response = {message: "Error 4", code: "err"};
     }
+
+    // Update score immediately prior to sending
+    response.score = city.upvotes.length - city.downvotes.length;
 
     res.json(response);
 });
