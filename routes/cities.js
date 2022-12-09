@@ -103,9 +103,54 @@ router.post("/vote", async (req, res) => {
     console.log("Request body: ", req.body);
 
     const city = await City.findById(req.body.cityId);
-    console.log(city);
+    const alreadyUpvoted = city.upvotes.indexOf(req.user.username); // Will be -1 if not found
+    const alreadyDownvoted = city.downvotes.indexOf(req.user.username); // Will be -1 if not found
 
-    res.json(city);
+    let response = {};
+    // Voting Logic
+    if(alreadyUpvoted === -1 && alreadyDownvoted === -1) { // Has not voted
+        if(req.body.voteType === "up") { // Upvoting
+            city.upvotes.push(req.user.username);
+            city.save();
+            response.message = "Upvote tallied!";
+        } else if(req.body.voteType === "down") { // Downvoting
+            city.downvotes.push(req.user.username);
+            city.save();
+            response.message = "Downvote tallied!";
+        } else { // Error 1
+            response.message = "Error 1";
+        }
+    } else if(alreadyUpvoted >= 0) { // Already Upvoted
+        if(req.body.voteType === "up") { // Cancel Upvote
+            city.upvotes.splice(alreadyUpvoted, 1);
+            city.save();
+            response.message = "Upvote Removed";
+        } else if(req.body.voteType === "down") { // Change to Downvote
+            city.upvotes.splice(alreadyUpvoted, 1);
+            city.downvotes.push(req.user.username);
+            city.save();
+            response.message = "Changed to Downvote";
+        } else { // Error 2
+            response.message = "Error 2";
+        }
+    } else if(alreadyDownvoted >= 0) { // Already Downvoted
+        if(req.body.voteType === "up") { // Change to Upvote
+            city.downvotes.splice(alreadyDownvoted, 1);
+            city.upvotes.push(req.user.username);
+            city.save();
+            response.message = "Changed to Upvote";
+        } else if(req.body.voteType === "down") { // Cancel Downvote
+            city.downvotes.splice(alreadyDownvoted, 1);
+            city.save();
+            response.message = "Downvote Removed";
+        } else { // Error 3
+            response.message = "Error 3";
+        }
+    } else { // Error 4
+        response.message = "Error 4";
+    }
+
+    res.json(response);
 });
 
 // Show Route
