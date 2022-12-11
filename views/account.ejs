@@ -1,5 +1,31 @@
 <%- include("partials/header") %>
 
-<h1>ACCOUNT PAGE HERE</h1>
+<div class="container">
+    <h1>Account</h1>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th scope="row">Username</th>
+                <td><%= user.username %></td>
+            </tr>
+            <tr>
+                <th scope="row">Email Address</th>
+                <td><%= user.email %></td>
+            </tr>
+            <tr>
+                <th scope="row">Password</th>
+                <td>**********</td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a href="/account/<%= user._id %>/edit">
+            <button class="btn btn-outline-info btn-lg w-100 mb-2">Edit</button>
+        </a>
+        <a href="/password/<%= user._id %>/edit">
+            <button class="btn btn-outline-warning btn-lg w-100 mb-2">Change Password</button>
+        </a>
+    </div>
+</div>
 
 <%- include("partials/footer") %>

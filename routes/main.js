@@ -1,4 +1,6 @@
 const express = require("express");
+const City = require("../models/city");
+const User = require("../models/user");
 const router = express.Router();
 const isLoggedIn = require("../utils/isLoggedIn");
 
@@ -10,11 +12,6 @@ router.get("/", (req, res) => {
 // Redirect from Landing Page to Cities Index Route
 router.post("/", (req, res) => {
     res.redirect("/cities");
-});
-
-// Account Route
-router.get("/account", isLoggedIn, (req, res) => {
-    res.render("account");
 });
 
 module.exports = router;
