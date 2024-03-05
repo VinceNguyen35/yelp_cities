@@ -22,4 +22,4 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: pm2 restart backendserver
+    - run: pm2 restart nodejs-ssl-server
