@@ -107,4 +107,5 @@ app.use("/cities/:id/comments", commentsRoutes);
 // Check that app is running
 app.listen(process.env.PORT || 3000, () => {
     console.log("yelp_cities is running");
+    console.log("CI / CD pipeline is active");
 });
